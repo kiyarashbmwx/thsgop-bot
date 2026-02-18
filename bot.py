@@ -1,13 +1,11 @@
 import asyncio
 import os
+TOKEN = os.getenv("8436681390:AAGqcUZ2I2ybqkTOx9hQ5y0nhoFJhN34l7c")
 import aiohttp
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
-import os
-TOKEN = os.getenv("8436681390:AAGqcUZ2I2ybqkTOx9hQ5y0nhoFJhN34l7c")
-print("TOKEN:", TOKEN)
 
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
@@ -79,6 +77,7 @@ async def main():
 if name == "main":
 
     asyncio.run(main())
+
 
 
 
