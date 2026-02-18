@@ -51,10 +51,15 @@ async def start_handler(message: types.Message):
 
 @dp.message()
 async def handle_buttons(message: types.Message):
-    if "USDT" in message.text:
-        price = await get_price("BTCUSDT")
-        final_price = add_profit(price)
-        await message.answer(f"💎 قیمت با سود:\n{final_price:.4f}")
+if "USDT" in message.text:
+    price = await get_price("BTCUSDT")
+
+    if price is None:
+        await message.answer("❌ خطا در دریافت قیمت. چند ثانیه دیگر دوباره امتحان کنید.")
+        return
+
+    final_price = add_profit(price)
+    await message.answer(f"💎 قیمت با سود:\n{final_price:.4f}")
 
 async def main():
     await dp.start_polling(bot)
@@ -62,3 +67,4 @@ async def main():
 if name == "main":
 
     asyncio.run(main())
+
