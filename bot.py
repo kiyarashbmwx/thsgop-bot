@@ -1,6 +1,6 @@
 import asyncio
 import os
-TOKEN = os.getenv("8436681390:AAGqcUZ2I2ybqkTOx9hQ5y0nhoFJhN34l7c")
+TOKEN = os.getenv("8473552161:AAGRKnidlEMCMz_JzjFpEbOgPuF7SukNU6I")
 import aiohttp
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
@@ -77,6 +77,7 @@ async def main():
 if name == "main":
 
     asyncio.run(main())
+
 
 
 
