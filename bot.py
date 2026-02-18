@@ -20,11 +20,27 @@ keyboard = ReplyKeyboardMarkup(
 )
 
 async def get_price(symbol):
-    url = f"https://api.binance.com/api/v3/ticker/price?symbol={symbol}"
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url) as resp:
-            data = await resp.json()
-            return float(data["price"])
+    try:
+        url = f"https://api.binance.com/api/v3/ticker/price?symbol={symbol}"
+        timeout = aiohttp.ClientTimeout(total=10)
+
+        async with aiohttp.ClientSession(timeout=timeout) as session:
+            async with session.get(url) as resp:
+                if resp.status != 200:
+                    print("API Status Error:", resp.status)
+                    return None
+
+                data = await resp.json()
+
+                if "price" not in data:
+                    print("API Invalid Response:", data)
+                    return None
+
+                return float(data["price"])
+
+    except Exception as e:
+        print("API Exception:", e)
+        return None
 
 def add_profit(price):
     return price + (price * PROFIT_PERCENT / 100)
@@ -44,4 +60,5 @@ async def main():
     await dp.start_polling(bot)
 
 if name == "main":
+
     asyncio.run(main())
