@@ -50,16 +50,27 @@ async def start_handler(message: types.Message):
     await message.answer("ربات فروش فعال شد ✅", reply_markup=keyboard)
 
 @dp.message()
+@dp.message()
 async def handle_buttons(message: types.Message):
-if "USDT" in message.text:
-    price = await get_price("BTCUSDT")
+    if "USDT" in message.text:
+        price = await get_price("BTCUSDT")
 
-    if price is None:
-        await message.answer("❌ خطا در دریافت قیمت. چند ثانیه دیگر دوباره امتحان کنید.")
-        return
+        if price is None:
+            await message.answer("❌ خطا در دریافت قیمت. دوباره تلاش کنید.")
+            return
 
-    final_price = add_profit(price)
-    await message.answer(f"💎 قیمت با سود:\n{final_price:.4f}")
+        final_price = add_profit(price)
+        await message.answer(f"💎 قیمت با سود:\n{final_price:.4f}")
+
+    elif "TON" in message.text:
+        price = await get_price("TONUSDT")
+
+        if price is None:
+            await message.answer("❌ خطا در دریافت قیمت. دوباره تلاش کنید.")
+            return
+
+        final_price = add_profit(price)
+        await message.answer(f"🟣 قیمت با سود:\n{final_price:.4f}")
 
 async def main():
     await dp.start_polling(bot)
@@ -67,4 +78,5 @@ async def main():
 if name == "main":
 
     asyncio.run(main())
+
 
